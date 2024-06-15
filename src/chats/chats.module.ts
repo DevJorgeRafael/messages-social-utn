@@ -1,4 +1,3 @@
-// src/chats/chats.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Chats } from './entities/chats.entity';
@@ -18,10 +17,19 @@ import { UsuariosChatController } from './controllers/usuarios-chat.controller';
 import { MensajesController } from './controllers/mensajes.controller';
 
 
-
 @Module({
-    imports: [TypeOrmModule.forFeature([Chats, TipoChat, NivelChat, UsuariosChat, Mensajes])],
-    providers: [ChatsService, TipoChatService, NivelChatService, UsuariosChatService, MensajesService],
-    controllers: [ChatsController, TipoChatController, NivelChatController, UsuariosChatController, MensajesController],
+    imports: [TypeOrmModule.forFeature([
+        Chats, TipoChat, 
+        NivelChat, UsuariosChat, 
+        Mensajes])],
+    providers: [
+        ChatsService, TipoChatService, 
+        NivelChatService, UsuariosChatService, 
+        MensajesService
+    ],
+    controllers: [ChatsController, TipoChatController, 
+        NivelChatController, UsuariosChatController, 
+        MensajesController
+    ],
 })
 export class ChatsModule { }
