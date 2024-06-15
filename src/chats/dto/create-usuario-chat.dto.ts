@@ -1,4 +1,4 @@
-export class CreateUsusarioChatDto {
+export class CreateUsuarioChatDto {
     usuario_id: number;
     chat_id: number;
 }

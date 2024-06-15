@@ -1,40 +1,43 @@
-// src/chats/services/tipo-chat.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TipoChat } from '../entities/tipo-chat.entity';
+import { CreateTipoChatDto } from '../dto/create-tipo-chat.dto';
 
 @Injectable()
 export class TipoChatService {
     constructor(
         @InjectRepository(TipoChat)
-        private tipoChatRepository: Repository<TipoChat>,
+        private readonly tipoChatRepository: Repository<TipoChat>,
     ) { }
 
-    findAll() {
+    async create(createTipoChatDto: CreateTipoChatDto): Promise<TipoChat> {
+        const newTipoChat = this.tipoChatRepository.create(createTipoChatDto);
+        return this.tipoChatRepository.save(newTipoChat);
+    }
+
+    findAll(): Promise<TipoChat[]> {
         return this.tipoChatRepository.find();
     }
 
-    async findById(id: number): Promise<TipoChat> {
+    async findOne(id: number): Promise<TipoChat> {
         const tipoChat = await this.tipoChatRepository.findOne({
-            where: { tipo_chat_id: id }
+            where: { tipo_chat_id: id },
         });
         if (!tipoChat) {
-            throw new NotFoundException(`TipoChat with id ${id} not found`);
+            throw new NotFoundException(`TipoChat with id ${id} not found.`);
         }
         return tipoChat;
     }
 
-    create(tipoChat: Partial<TipoChat>) {
-        const newTipoChat = this.tipoChatRepository.create(tipoChat);
-        return this.tipoChatRepository.save(newTipoChat);
+    async update(id: number, updateTipoChat: Partial<CreateTipoChatDto>): Promise<TipoChat> {
+        const tipoChat = await this.findOne(id);
+        Object.assign(tipoChat, updateTipoChat);
+        return this.tipoChatRepository.save(tipoChat);
     }
 
-    update(id: number, tipoChat: Partial<TipoChat>) {
-        return this.tipoChatRepository.update(id, tipoChat);
-    }
-
-    delete(id: number) {
-        return this.tipoChatRepository.delete(id);
+    async remove(id: number): Promise<void> {
+        const tipoChat = await this.findOne(id);
+        await this.tipoChatRepository.remove(tipoChat);
     }
 }
