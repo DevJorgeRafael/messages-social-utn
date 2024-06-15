@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Chats } from './chats.entity';
 
-@Entity('usuarios_chat')
+@Entity()
 export class UsuariosChat {
     @PrimaryGeneratedColumn()
     usuarios_chat_id: number;
@@ -9,6 +9,6 @@ export class UsuariosChat {
     @Column()
     usuario_id: number;
 
-    @ManyToOne(() => Chats, chats => chats.usuariosChat)
+    @ManyToOne(() => Chats, chat => chat.usuariosChat)
     chats: Chats;
 }

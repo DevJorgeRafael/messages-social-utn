@@ -10,7 +10,7 @@ import { ChatsController } from './controllers/chats.controller';
 import { TipoChatService } from './services/tipo-chat.service';
 import { NivelChatService } from './services/nivel-chat.service';
 import { UsuariosChatService } from './services/usuarios-chat.service';
-import { MensajesService } from './services/mensajes.service';
+import { MensajeService } from './services/mensajes.service';
 import { TipoChatController } from './controllers/tipo-chat.controller';
 import { NivelChatController } from './controllers/nivel-chat.controller';
 import { UsuariosChatController } from './controllers/usuarios-chat.controller';
@@ -25,7 +25,7 @@ import { MensajesController } from './controllers/mensajes.controller';
     providers: [
         ChatsService, TipoChatService, 
         NivelChatService, UsuariosChatService, 
-        MensajesService
+        MensajeService
     ],
     controllers: [ChatsController, TipoChatController, 
         NivelChatController, UsuariosChatController, 
