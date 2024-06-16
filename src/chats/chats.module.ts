@@ -31,5 +31,6 @@ import { MensajesController } from './controllers/mensajes.controller';
         NivelChatController, UsuariosChatController, 
         MensajesController
     ],
+    exports: [MensajeService]
 })
 export class ChatsModule { }

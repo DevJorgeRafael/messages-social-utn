@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Mensajes } from '../entities/mensajes.entity';
 import { CreateMensajeDto } from '../dto/create-mensaje.dto';
 import { ChatsService } from './chats.service';
+import { CreateChatDto } from '../dto/create-chat.dto';
 
 @Injectable()
 export class MensajeService {
@@ -13,27 +14,24 @@ export class MensajeService {
         private readonly chatsService: ChatsService,
     ) { }
 
-    async create(createMensajeDto: CreateMensajeDto): Promise<Mensajes> {
-        // Verificar si el chat existe
-        let chat = await this.chatsService.findOne(createMensajeDto.chat_id).catch(() => null);
+    async create(createMensajeDto: CreateMensajeDto, createChatDto?: CreateChatDto): Promise<Mensajes> {
+        let chatId = createMensajeDto.chat_id;
 
-        // Si no existe, crear el chat
-        // if (!chat) {
-        //     const createChatDto = {
-        //         chat_nombre: `Chat for ${createMensajeDto.chat_id}`, // Define el nombre del chat según tus necesidades
-        //         tipo_chat_id: createMensajeDto.tipo_chat_id, // Añade estos campos al DTO si es necesario
-        //         nivel_chat_id: createMensajeDto.nivel_chat_id,
-        //     };
-        //     chat = await this.chatsService.create(createChatDto);
-        // }
+        if (!chatId && createChatDto) {
+            const chat = await this.chatsService.create(createChatDto);
+            chatId = chat.chat_id;
+        }
 
-        // Crear el mensaje
-        const newMensaje = this.mensajeRepository.create(createMensajeDto);
+        const newMensaje = this.mensajeRepository.create({
+            ...createMensajeDto,
+            chat_id: chatId,
+        });
+
         return this.mensajeRepository.save(newMensaje);
     }
 
-    findAll(): Promise<Mensajes[]> {
-        return this.mensajeRepository.find();
+    findAllByChat(chatId: number): Promise<Mensajes[]> {
+        return this.mensajeRepository.find({ where: { chats: { chat_id: chatId } } });
     }
 
     async findOne(id: number): Promise<Mensajes> {
