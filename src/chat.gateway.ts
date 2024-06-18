@@ -24,6 +24,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     async handleSendMessage(client: Socket, payload: { mensaje: CreateMensajeDto, chat?: CreateChatDto }): Promise<void> {
         const { mensaje, chat } = payload;
         const newMensaje = await this.mensajeService.create(mensaje, chat);
-        this.server.to(newMensaje.chat_id.toString()).emit('newMessage', newMensaje);
+        console.log(newMensaje)
+        this.server.emit('messageReceived', newMensaje);
     }
 }
