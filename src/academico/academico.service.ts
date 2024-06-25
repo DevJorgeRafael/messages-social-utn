@@ -14,7 +14,7 @@ import { Profesor } from './interfaces/profesores.interface';
 import { ProfesorDetalle } from './interfaces/profesor-detalle.interface';
 import { Asignatura } from './interfaces/asignatura.interface';
 import { AsignaturaDetalle } from './interfaces/asignatura-detalle.interface';
-import { Estudiante } from './interfaces/estudiante.iterface';
+import { Estudiante } from './interfaces/estudiante.interface';
 import { EstudianteDetalle } from './interfaces/estudiante-detalle.interface';
 import { Rol } from './interfaces/rol.interface';
 import { RolDetalle } from './interfaces/rol-detalle.interface';
@@ -26,7 +26,7 @@ export class AcademicoService {
     constructor(
         private readonly httpService: HttpService,
         private readonly configService: ConfigService
-    ) { 
+    ) {
         this.apiUrl = this.configService.get<string>('API_URL');
     }
 
@@ -66,7 +66,7 @@ export class AcademicoService {
         return this.httpService.get(`${this.apiUrl}/asignaturas`)
     }
 
-    getAsignaturaById(id:number): Observable<AxiosResponse<AsignaturaDetalle>> {
+    getAsignaturaById(id: number): Observable<AxiosResponse<AsignaturaDetalle>> {
         return this.httpService.get(`${this.apiUrl}/asignaturas/${id}`)
     }
 

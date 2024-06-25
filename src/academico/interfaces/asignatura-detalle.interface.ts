@@ -1,4 +1,4 @@
-import { Estudiante } from "./estudiante.iterface";
+import { Estudiante } from "./estudiante.interface";
 import { Profesor } from "./profesores.interface";
 
 export interface AsignaturaDetalle {

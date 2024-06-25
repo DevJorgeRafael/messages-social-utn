@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AcademicoModule } from './academico/academico.module';
 import { HttpModule } from '@nestjs/axios';
 import { ChatsModule } from './chats/chats.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ChatsModule } from './chats/chats.module';
     HttpModule,
     AcademicoModule,
     ChatsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],
