@@ -3,6 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
+import { map } from 'rxjs/operators'
 
 import { Facultad } from './interfaces/facultad.interface';
 import { FacultadDetalle } from './interfaces/facultad-detalle.interface';
@@ -74,8 +75,10 @@ export class AcademicoService {
         return this.httpService.get(`${this.apiUrl}/estudiantes`)
     }
 
-    getEstudianteById(id: number): Observable<AxiosResponse<EstudianteDetalle>> {
-        return this.httpService.get(`${this.apiUrl}/estudiantes/${id}`)
+    getEstudianteById(id: number): Observable<any> {
+        return this.httpService.get(`${this.apiUrl}/estudiantes/${id}`).pipe(
+            map((response: AxiosResponse) => response.data)
+        );
     }
 
     getRoles(): Observable<AxiosResponse<Rol[]>> {
