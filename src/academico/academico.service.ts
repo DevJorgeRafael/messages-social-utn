@@ -59,8 +59,10 @@ export class AcademicoService {
         return this.httpService.get(`${this.apiUrl}/profesores`)
     }
 
-    getProfesorById(id: number): Observable<AxiosResponse<ProfesorDetalle>> {
-        return this.httpService.get(`${this.apiUrl}/profesores/${id}`)
+    getProfesorById(id: number): Observable<ProfesorDetalle> {
+        return this.httpService.get(`${this.apiUrl}/profesores/${id}`).pipe(
+            map((response: AxiosResponse) => response.data as ProfesorDetalle)
+        )
     }
 
     getAsignaturas(id: number): Observable<AxiosResponse<Asignatura[]>> {
@@ -75,9 +77,9 @@ export class AcademicoService {
         return this.httpService.get(`${this.apiUrl}/estudiantes`)
     }
 
-    getEstudianteById(id: number): Observable<any> {
+    getEstudianteById(id: number): Observable<EstudianteDetalle> {
         return this.httpService.get(`${this.apiUrl}/estudiantes/${id}`).pipe(
-            map((response: AxiosResponse) => response.data)
+            map((response: AxiosResponse) => response.data as EstudianteDetalle)
         );
     }
 
