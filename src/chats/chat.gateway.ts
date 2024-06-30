@@ -20,16 +20,13 @@ export class ChatGateway {
         private readonly connectionGateway: ConnectionGateway // Inyectar el ConnectionGateway
     ) { }
 
-    @SubscribeMessage('sendMessage')
+    @SubscribeMessage('SendMessage')
     async handleSendMessage(@MessageBody() payload: { mensaje: CreateMensajeDto, chat?: CreateChatDto }): Promise<void> {
         const { mensaje, chat } = payload;
-        console.log('Mensaje recibido:', mensaje); // Agrega este log para verificar si el mensaje se recibe
         console.log('Chat recibido:', chat); // Agrega este log para verificar si el chat se recibe
         const newMensaje = await this.mensajeService.create(mensaje, chat);
         console.log('Nuevo mensaje creado:', newMensaje);
         this.connectionGateway.server.emit('messageReceived', newMensaje);
     }
 
-
-    // Otros métodos para manejar eventos de chat pueden ir aquí
 }
