@@ -115,4 +115,15 @@ export class AuthService {
             throw new Error('Token inválido')
         }
     }
+
+    async getUserFromToken(token: string): Promise<EstudianteDetalle | ProfesorDetalle> {
+        try {
+            const payload = this.jwtService.verify<JwtPayload>(token);
+            const userType = payload.username.startsWith('E') ? 'E' : 'D';
+            const user = await this.getFullUser(payload.sub, userType);
+            return user;
+        } catch (error) {
+            throw new Error('Token inválido');
+        }
+    }
 }

@@ -16,6 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
     AcademicoModule
   ],
   providers: [AuthService, JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
+  exports: [AuthService]
 })
 export class AuthModule {}
