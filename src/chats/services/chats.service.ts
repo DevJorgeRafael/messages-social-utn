@@ -1,26 +1,26 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Chats } from '../entities/chats.entity';
+import { Chat } from '../entities/chat.entity';
 import { Repository } from 'typeorm';
 import { CreateChatDto } from '../dto/create-chat.dto';
 
 @Injectable()
 export class ChatsService {
     constructor(
-        @InjectRepository(Chats)
-        private readonly chatRepository: Repository<Chats>,
+        @InjectRepository(Chat)
+        private readonly chatRepository: Repository<Chat>,
     ) { }
 
-    async create(createChatDto: CreateChatDto): Promise<Chats> {
+    async create(createChatDto: CreateChatDto): Promise<Chat> {
         const newChat = this.chatRepository.create(createChatDto);
         return this.chatRepository.save(newChat);
     }
 
-    findAll(): Promise<Chats[]> {
+    findAll(): Promise<Chat[]> {
         return this.chatRepository.find();
     }
 
-    async findOne(id: number): Promise<Chats> {
+    async findOne(id: number): Promise<Chat> {
         const chat = await this.chatRepository.findOne({
             where: { chat_id: id },
         });
@@ -30,7 +30,7 @@ export class ChatsService {
         return chat;
     }
 
-    async update(id: number, updateChat: Partial<CreateChatDto>): Promise<Chats> {
+    async update(id: number, updateChat: Partial<CreateChatDto>): Promise<Chat> {
         const chat = await this.findOne(id);
         Object.assign(chat, updateChat);
         return this.chatRepository.save(chat);

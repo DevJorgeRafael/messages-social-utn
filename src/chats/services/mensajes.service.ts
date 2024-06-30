@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Mensajes } from '../entities/mensajes.entity';
+import { Mensaje } from '../entities/mensaje.entity';
 import { CreateMensajeDto } from '../dto/create-mensaje.dto';
 import { ChatsService } from './chats.service';
 import { CreateChatDto } from '../dto/create-chat.dto';
@@ -9,12 +9,12 @@ import { CreateChatDto } from '../dto/create-chat.dto';
 @Injectable()
 export class MensajeService {
     constructor(
-        @InjectRepository(Mensajes)
-        private readonly mensajeRepository: Repository<Mensajes>,
+        @InjectRepository(Mensaje)
+        private readonly mensajeRepository: Repository<Mensaje>,
         private readonly chatsService: ChatsService,
     ) { }
 
-    async create(createMensajeDto: CreateMensajeDto, createChatDto?: CreateChatDto): Promise<Mensajes> {
+    async create(createMensajeDto: CreateMensajeDto, createChatDto?: CreateChatDto): Promise<Mensaje> {
         let chatId = createMensajeDto.chat_id;
 
         if (!chatId && createChatDto) {
@@ -30,11 +30,11 @@ export class MensajeService {
         return this.mensajeRepository.save(newMensaje);
     }
 
-    findAllByChat(chatId: number): Promise<Mensajes[]> {
-        return this.mensajeRepository.find({ where: { chats: { chat_id: chatId } } });
+    findAllByChat(chatId: number): Promise<Mensaje[]> {
+        return this.mensajeRepository.find({ where: { chat: { chat_id: chatId } } });
     }
 
-    async findOne(id: number): Promise<Mensajes> {
+    async findOne(id: number): Promise<Mensaje> {
         const mensaje = await this.mensajeRepository.findOne({
             where: { mensaje_id: id },
         });
@@ -44,7 +44,7 @@ export class MensajeService {
         return mensaje;
     }
 
-    async update(id: number, updateMensaje: Partial<CreateMensajeDto>): Promise<Mensajes> {
+    async update(id: number, updateMensaje: Partial<CreateMensajeDto>): Promise<Mensaje> {
         const mensaje = await this.findOne(id);
         Object.assign(mensaje, updateMensaje);
         return this.mensajeRepository.save(mensaje);

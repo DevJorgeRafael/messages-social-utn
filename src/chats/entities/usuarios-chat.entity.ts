@@ -1,15 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Chats } from './chats.entity';
+import { Chat } from './chat.entity';
 
-@Entity()
-export class UsuariosChat {
+@Entity('usuarios_chat')
+export class UsuarioChat {
     @PrimaryGeneratedColumn()
     usuarios_chat_id: number;
 
     @Column()
     usuario_id: number;
 
-    @ManyToOne(() => Chats, chat => chat.usuariosChat)
+    @Column()
+    rol: string;
+
+    @ManyToOne(() => Chat, chat => chat.usuariosChat)
     @JoinColumn({ name: 'chat_id' })
-    chats: Chats;
+    chat: Chat;
 }

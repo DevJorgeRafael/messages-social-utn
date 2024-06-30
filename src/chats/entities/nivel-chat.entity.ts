@@ -1,6 +1,6 @@
 // src/chats/entities/nivel-chat.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Chats } from './chats.entity';
+import { Chat } from './chat.entity';
 
 @Entity('nivel_chat')
 export class NivelChat {
@@ -10,6 +10,6 @@ export class NivelChat {
     @Column()
     nivel_chat_nombre: string;
 
-    @OneToMany(() => Chats, chats => chats.nivelChat)
-    chats: Chats[];
+    @OneToMany(() => Chat, chat => chat.nivelChat)
+    chats: Chat[];
 }

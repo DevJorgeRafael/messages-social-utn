@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Chats } from './chats.entity';
+import { Chat } from './chat.entity';
 
 @Entity('mensajes')
-export class Mensajes {
+export class Mensaje {
     @PrimaryGeneratedColumn()
     mensaje_id: number;
 
@@ -16,12 +16,12 @@ export class Mensajes {
     fecha: Date;
 
     @Column()
-    usuario_id: number;
+    usuario: string;
 
     @Column()
     leido: boolean;
 
-    @ManyToOne(() => Chats, chats => chats.mensajes)
-    @JoinColumn({ name: 'chat_id' }) 
-    chats: Chats;
+    @ManyToOne(() => Chat, chat => chat.mensajes)
+    @JoinColumn({ name: 'chat_id' })
+    chat: Chat;
 }

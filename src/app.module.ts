@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ChatGateway } from './chat.gateway';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AcademicoModule } from './academico/academico.module';
 import { HttpModule } from '@nestjs/axios';
@@ -35,6 +34,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ChatGateway],
+  providers: [AppService],
 })
 export class AppModule {}

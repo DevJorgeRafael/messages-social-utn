@@ -2,11 +2,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { TipoChat } from './tipo-chat.entity';
 import { NivelChat } from './nivel-chat.entity';
-import { UsuariosChat } from './usuarios-chat.entity';
-import { Mensajes } from './mensajes.entity';
+import { UsuarioChat } from './usuarios-chat.entity';
+import { Mensaje } from './mensaje.entity';
 
 @Entity('chats')
-export class Chats {
+export class Chat {
     @PrimaryGeneratedColumn()
     chat_id: number;
 
@@ -21,9 +21,9 @@ export class Chats {
     @JoinColumn({ name: 'nivel_chat_id' })
     nivelChat: NivelChat;
 
-    @OneToMany(() => UsuariosChat, usuariosChat => usuariosChat.chats)
-    usuariosChat: UsuariosChat[];
+    @OneToMany(() => UsuarioChat, usuarioChat => usuarioChat.chat)
+    usuariosChat: UsuarioChat[];
 
-    @OneToMany(() => Mensajes, mensajes => mensajes.chats)
-    mensajes: Mensajes[];
+    @OneToMany(() => Mensaje, mensaje => mensaje.chat)
+    mensajes: Mensaje[];
 }

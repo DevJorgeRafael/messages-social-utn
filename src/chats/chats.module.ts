@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Chats } from './entities/chats.entity';
+import { Chat } from './entities/chat.entity';
 import { TipoChat } from './entities/tipo-chat.entity';
 import { NivelChat } from './entities/nivel-chat.entity';
-import { UsuariosChat } from './entities/usuarios-chat.entity';
-import { Mensajes } from './entities/mensajes.entity';
+import { UsuarioChat } from './entities/usuarios-chat.entity';
+import { Mensaje } from './entities/mensaje.entity';
 import { ChatsService } from './services/chats.service';
 import { ChatsController } from './controllers/chats.controller';
 import { TipoChatService } from './services/tipo-chat.service';
@@ -15,20 +15,26 @@ import { TipoChatController } from './controllers/tipo-chat.controller';
 import { NivelChatController } from './controllers/nivel-chat.controller';
 import { UsuariosChatController } from './controllers/usuarios-chat.controller';
 import { MensajesController } from './controllers/mensajes.controller';
+import { ChatGateway } from './chat.gateway';
+import { ConnectionGateway } from 'src/connection.gateway';
+import { AuthModule } from 'src/auth/auth.module';
 
 
 @Module({
     imports: [TypeOrmModule.forFeature([
-        Chats, TipoChat, 
-        NivelChat, UsuariosChat, 
-        Mensajes])],
-    providers: [
-        ChatsService, TipoChatService, 
-        NivelChatService, UsuariosChatService, 
-        MensajeService
+        Chat, TipoChat,
+        NivelChat, UsuarioChat,
+        Mensaje]),
+        AuthModule
     ],
-    controllers: [ChatsController, TipoChatController, 
-        NivelChatController, UsuariosChatController, 
+    providers: [
+        ChatsService, TipoChatService,
+        NivelChatService, UsuariosChatService,
+        MensajeService, ChatGateway,
+        ConnectionGateway
+    ],
+    controllers: [ChatsController, TipoChatController,
+        NivelChatController, UsuariosChatController,
         MensajesController
     ],
     exports: [MensajeService]

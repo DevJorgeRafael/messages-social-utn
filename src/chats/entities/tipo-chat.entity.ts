@@ -1,6 +1,6 @@
 // src/chats/entities/tipo-chat.entity.ts
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Chats } from './chats.entity';
+import { Chat } from './chat.entity';
 
 @Entity('tipo_chat')
 export class TipoChat {
@@ -10,6 +10,6 @@ export class TipoChat {
     @Column()
     tipo_chat_nombre: string;
 
-    @OneToMany(() => Chats, chats => chats.tipoChat)
-    chats: Chats[];
+    @OneToMany(() => Chat, chat => chat.tipoChat)
+    chats: Chat[];
 }
