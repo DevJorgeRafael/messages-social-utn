@@ -40,4 +40,14 @@ export class ChatsService {
         const chat = await this.findOne(id);
         await this.chatRepository.remove(chat);
     }
+
+    async getChatsByNivel(usuario: string, nivel_chat_id: number): Promise<Chat[]> {
+        const chats = await this.chatRepository.find({
+            where: { nivelChat: { nivel_chat_id },
+            usuariosChat: { usuario }
+        },
+            relations: ['usuarios'],
+        });
+        return chats;
+    }
 }

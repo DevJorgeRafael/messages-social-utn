@@ -4,6 +4,7 @@ import { CreateMensajeDto } from './dto/create-mensaje.dto';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { MensajeService } from './services/mensajes.service';
 import { ConnectionGateway } from '../connection.gateway';
+import { ChatsService } from './services/chats.service';
 
 @WebSocketGateway({
     cors: {
@@ -17,7 +18,8 @@ export class ChatGateway {
 
     constructor(
         private readonly mensajeService: MensajeService,
-        private readonly connectionGateway: ConnectionGateway // Inyectar el ConnectionGateway
+        private readonly connectionGateway: ConnectionGateway,
+        private readonly chatService: ChatsService,
     ) { }
 
     @SubscribeMessage('SendMessage')
@@ -27,6 +29,11 @@ export class ChatGateway {
         const newMensaje = await this.mensajeService.create(mensaje, chat);
         console.log('Nuevo mensaje creado:', newMensaje);
         this.connectionGateway.server.emit('messageReceived', newMensaje);
+    }
+
+    @SubscribeMessage('GetAcademicChats')
+    async handleGetAcademicChats(@MessageBody() payload: { userId: number }): Promise<void> {
+        const chats = await this.chatService;
     }
 
 }

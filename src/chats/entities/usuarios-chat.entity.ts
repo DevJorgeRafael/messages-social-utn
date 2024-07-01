@@ -7,7 +7,7 @@ export class UsuarioChat {
     usuarios_chat_id: number;
 
     @Column()
-    usuario_id: number;
+    usuario: string;
 
     @Column()
     rol: string;
