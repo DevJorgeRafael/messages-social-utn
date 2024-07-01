@@ -3,16 +3,31 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Chat } from '../entities/chat.entity';
 import { Repository } from 'typeorm';
 import { CreateChatDto } from '../dto/create-chat.dto';
+import { TipoChat } from '../entities/tipo-chat.entity';
+import { NivelChat } from '../entities/nivel-chat.entity';
 
 @Injectable()
 export class ChatsService {
     constructor(
         @InjectRepository(Chat)
         private readonly chatRepository: Repository<Chat>,
+        @InjectRepository(TipoChat)
+        private readonly tipoChatRepository: Repository<TipoChat>,
+        @InjectRepository(NivelChat)
+        private readonly nivelChatRepository: Repository<NivelChat>,
     ) { }
 
     async create(createChatDto: CreateChatDto): Promise<Chat> {
-        const newChat = this.chatRepository.create(createChatDto);
+        const tipoChat = await this.tipoChatRepository.findOne({where: { tipo_chat_id: createChatDto.tipo_chat_id } });
+        const nivelChat = await this.nivelChatRepository.findOne({where: { nivel_chat_id: createChatDto.nivel_chat_id } });
+        
+        const newChat = this.chatRepository.create({
+            chat_nombre: createChatDto.chat_nombre,
+            tipoChat,
+            nivelChat,
+        });
+
+        console.log(newChat)
         return this.chatRepository.save(newChat);
     }
 

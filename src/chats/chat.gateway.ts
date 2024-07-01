@@ -25,9 +25,7 @@ export class ChatGateway {
     @SubscribeMessage('SendMessage')
     async handleSendMessage(@MessageBody() payload: { mensaje: CreateMensajeDto, chat?: CreateChatDto }): Promise<void> {
         const { mensaje, chat } = payload;
-        console.log('Chat recibido:', chat); // Agrega este log para verificar si el chat se recibe
         const newMensaje = await this.mensajeService.create(mensaje, chat);
-        console.log('Nuevo mensaje creado:', newMensaje);
         this.connectionGateway.server.emit('messageReceived', newMensaje);
     }
 
